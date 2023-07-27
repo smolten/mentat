@@ -57,6 +57,13 @@ def count_tokens(message: str) -> int:
     return len(tiktoken.encoding_for_model("gpt-4").encode(message))
 
 
+# Remove version from end of model name - Version does not affect pricing
+def shorten(model: str) -> str:
+    # Remove the part that starts with '-' and ends with only numbers
+    model_short = re.sub('-\d+$', '', model)
+    return model_short
+
+
 def choose_model(messages: list[dict[str, str]], allow_32k) -> str:
     prompt_token_count = 0
     tokenizer = tiktoken.encoding_for_model("gpt-4")
@@ -100,11 +107,18 @@ class CostTracker:
         call_time: float,
     ) -> None:
         cost_per_1000_tokens = {
-            "gpt-4-0314": (0.03, 0.06),
-            "gpt-4-32k-0314": (0.06, 0.12),
+            'gpt-3.5-turbo': (0.0015, 0.002),
+            'gpt-3.5-turbo-16K': (0.003, 0.004),
+            'gpt-4': (0.03, 0.06),
+            'gpt-4-32K': (0.06, 0.12)
         }
-        prompt_cost = (num_prompt_tokens / 1000) * cost_per_1000_tokens[model][0]
-        sampled_cost = (num_sampled_tokens / 1000) * cost_per_1000_tokens[model][1]
+
+        model_short = shorten(model) 
+        if (model_short not in cost_per_1000_tokens):
+            cprint("Warning: No price set for model " + model + " (shortened: " + model_short + ")")
+
+        prompt_cost = (num_prompt_tokens / 1000) * cost_per_1000_tokens[model_short][0]
+        sampled_cost = (num_sampled_tokens / 1000) * cost_per_1000_tokens[model_short][1]
 
         tokens_per_second = num_sampled_tokens / call_time
         call_cost = prompt_cost + sampled_cost
