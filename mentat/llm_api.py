@@ -1,5 +1,6 @@
 import logging
 import os
+import re
 import sys
 from dataclasses import dataclass
 from typing import Generator
@@ -72,7 +73,7 @@ def choose_model(messages: list[dict[str, str]], allow_32k) -> str:
         prompt_token_count += len(encoding)
     cprint(f"\nTotal token count: {prompt_token_count}", "cyan")
 
-    model = "gpt-4-0314"
+    model = "gpt-3.5-turbo"
     token_buffer = 500
     if prompt_token_count > 8192 - token_buffer:
         if allow_32k:
@@ -134,4 +135,4 @@ class CostTracker:
         self.total_cost += call_cost
 
     def display_total_cost(self) -> None:
-        cprint(f"\nTotal session cost: ${self.total_cost:.2f}", color="light_blue")
+        cprint(f"\nTotal session cost: ${self.total_cost:.4f}", color="light_blue")
