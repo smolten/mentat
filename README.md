@@ -1,6 +1,7 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/bio_bootloader?style=social)](https://twitter.com/bio_bootloader)
 [![Discord Follow](https://dcbadge.vercel.app/api/server/XbPdxAMJte?style=flat)](https://discord.gg/zbvd9qx9Pb)
 [![Stable Version](https://img.shields.io/pypi/v/mentat-ai?color=blue)](https://pypi.org/project/mentat-ai/)
+[![License](https://img.shields.io/pypi/l/mentat-ai.svg)](https://github.com/biobootloader/mentat/blob/main/LICENSE)
 
 # 🧙‍♂️ Mentat ⚡
 
@@ -29,11 +30,14 @@ See more videos on [Twitter](https://twitter.com/bio_bootloader/status/168390673
 
 # ⚙️ Setup
 
+[Installation and Setup Demonstration Video](https://www.youtube.com/watch?v=bVJP8hY8uRM)
+
 ## Install
 
 Before installing, it's suggested that you create a virtual environment to install it in:
 
 ```
+# Python 3.10 or higher is required
 python3 -m venv .venv
 source .venv/bin/activate
 ```
@@ -68,7 +72,8 @@ For custom configuration options see [configuration.md](docs/configuration.md)
 
 
 # 🚀 Usage
-Run Mentat with:
+
+Run Mentat from within your project directory. Mentat uses git, so if your project doesn't already have git set up, run `git init`. Then you can run Mentat with:
 
 `mentat <paths to files or directories>`
 
